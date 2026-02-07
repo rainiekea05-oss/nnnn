@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>flowers for u uwu >////< 🌹</title>
-
   <style>
     body {
       margin: 0;
@@ -63,11 +62,20 @@
     }
 
     .message {
-      display: none;
       margin-top: 25px;
       font-size: 14px;
       line-height: 1.7;
-      animation: fadeUp 1.2s ease forwards;
+    }
+
+    .message span {
+      display: none;
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .message span.show {
+      display: inline;
+      opacity: 1;
     }
 
     .signature {
@@ -86,11 +94,6 @@
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
     }
-
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
   </style>
 </head>
 <body>
@@ -103,18 +106,14 @@
       🌹🌹🌹 red na sha ha
     </div>
 
-    <button onclick="reveal()">Open Bouquet 💐</button>
+    <button id="nextBtn">Open Bouquet 💐</button>
 
     <div class="message" id="msg">
-      <strong> This maybe simple but anyway, </strong><br><br>
-      dear u, you've been doing so great even sa review times pa nimo, and still doing great sa work.
-      I know how you always wanted this moment to come true and now, ari najud siya for real.
-      <br><br>
-      <strong>Congrats RN Nikolai!! ❤️</strong>
-
-      <div class="signature">
-        — always proud of you 🌹
-      </div>
+      <span>This may be simple, but anyway,</span><br><br>
+      <span>Dear you, you've been doing so great—even during your review times—and you’re still doing great at work.</span><br><br>
+      <span>I know how much you've always wanted this moment to come true, and now, ari na jud siya for real.</span><br><br>
+      <span><strong>Congrats RN Nikolai!! ❤️</strong></span><br><br>
+      <span class="signature">— always proud of you 🌹</span>
     </div>
   </div>
 
@@ -124,17 +123,25 @@
   </audio>
 
   <script>
-    function reveal() {
-      document.getElementById("msg").style.display = "block";
-      document.getElementById("music").play();
-    }
+    const btn = document.getElementById("nextBtn");
+    const spans = document.querySelectorAll("#msg span");
+    const music = document.getElementById("music");
+    let index = 0;
+
+    btn.addEventListener("click", () => {
+      // Start music on first click
+      if(index === 0) music.play();
+
+      if(index < spans.length) {
+        spans[index].classList.add("show");
+        index++;
+      } else {
+        // All message shown, hide button
+        btn.style.display = "none";
+      }
+    });
   </script>
 
 </body>
 </html>
-
-
-
-
-
 
