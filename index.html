@@ -113,7 +113,7 @@
       <span class="rose">🌹</span>
     </div>
 
-    <button id="nextBtn">Open Bouquet 💐</button>
+    <button id="nextBtn">Click Me 💐</button>
 
     <div class="message" id="msg">
       <span>This may be simple, but anyway,</span><br><br>
@@ -135,27 +135,29 @@
     const spans = document.querySelectorAll("#msg span");
     const music = document.getElementById("music");
 
-    let roseIndex = 0;
     let messageIndex = 0;
+    let roseIndex = 0;
 
     btn.addEventListener("click", () => {
       // Start music on first click
-      if(roseIndex === 0 && messageIndex === 0) music.play();
+      if(messageIndex === 0 && roseIndex === 0) music.play();
 
-      // Bloom roses first
-      if(roseIndex < roses.length) {
-        roses[roseIndex].classList.add("bloom");
-        roseIndex++;
-        return; // wait for next click
-      }
-
-      // Then show message
+      // Reveal message first
       if(messageIndex < spans.length) {
         spans[messageIndex].classList.add("show");
         messageIndex++;
-      } else {
-        btn.style.display = "none"; // hide button when done
+        return;
       }
+
+      // After message, bloom roses
+      if(roseIndex < roses.length) {
+        roses[roseIndex].classList.add("bloom");
+        roseIndex++;
+        return;
+      }
+
+      // Hide button when everything is done
+      btn.style.display = "none";
     });
   </script>
 
