@@ -41,7 +41,18 @@
       font-size: 38px;
       margin: 30px 0;
       line-height: 1.3;
-      animation: float 3s ease-in-out infinite;
+    }
+
+    .rose {
+      display: inline-block;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.5s ease;
+    }
+
+    .rose.bloom {
+      opacity: 1;
+      transform: scale(1);
     }
 
     button {
@@ -84,12 +95,6 @@
       opacity: 0.8;
     }
 
-    @keyframes float {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0); }
-    }
-
     @keyframes fadeIn {
       from { opacity: 0; transform: scale(0.95); }
       to { opacity: 1; transform: scale(1); }
@@ -102,8 +107,10 @@
     <h1>For You 🌹</h1>
     <p class="subtitle">A small bouquet, with a big meaning</p>
 
-    <div class="bouquet">
-      🌹🌹🌹 red na sha ha
+    <div class="bouquet" id="bouquet">
+      <span class="rose">🌹</span>
+      <span class="rose">🌹</span>
+      <span class="rose">🌹</span>
     </div>
 
     <button id="nextBtn">Open Bouquet 💐</button>
@@ -124,24 +131,33 @@
 
   <script>
     const btn = document.getElementById("nextBtn");
+    const roses = document.querySelectorAll("#bouquet .rose");
     const spans = document.querySelectorAll("#msg span");
     const music = document.getElementById("music");
-    let index = 0;
+
+    let roseIndex = 0;
+    let messageIndex = 0;
 
     btn.addEventListener("click", () => {
       // Start music on first click
-      if(index === 0) music.play();
+      if(roseIndex === 0 && messageIndex === 0) music.play();
 
-      if(index < spans.length) {
-        spans[index].classList.add("show");
-        index++;
+      // Bloom roses first
+      if(roseIndex < roses.length) {
+        roses[roseIndex].classList.add("bloom");
+        roseIndex++;
+        return; // wait for next click
+      }
+
+      // Then show message
+      if(messageIndex < spans.length) {
+        spans[messageIndex].classList.add("show");
+        messageIndex++;
       } else {
-        // All message shown, hide button
-        btn.style.display = "none";
+        btn.style.display = "none"; // hide button when done
       }
     });
   </script>
 
 </body>
 </html>
-
